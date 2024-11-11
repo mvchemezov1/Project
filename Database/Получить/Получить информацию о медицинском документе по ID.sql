@@ -1,0 +1,1 @@
+SELECT * FROM Медицинские_документы WHERE ID =?;

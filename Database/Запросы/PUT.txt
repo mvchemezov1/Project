@@ -1,0 +1,118 @@
+# Обновить информацию о пациенте
+@app.route('/patients/<int:patient_id>', methods=['PUT'])
+def update_patient(patient_id):
+    updated_patient = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE Пациент SET Фамилия = ?, Имя = ?, Отчество = ?, Дата_рождения = ?, Пол = ?, Адрес_проживания = ?, Телефон = ?, Email = ?, Полис_ОМС = ? WHERE ID = ?',
+        (updated_patient['Фамилия'], updated_patient['Имя'], updated_patient['Отчество'],
+         updated_patient['Дата_рождения'], updated_patient['Пол'],
+         updated_patient['Адрес_проживания'], updated_patient['Телефон'], updated_patient['Email'],
+         updated_patient['Полис_ОМС'], patient_id))
+    conn.commit()
+    conn.close()
+    return jsonify(updated_patient)
+
+
+# Обновить информацию о враче
+@app.route('/app/doctors/<int:doctor_id>', methods=['PUT'])
+def update_doctor(doctor_id):
+    updated_doctor = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE Пациент SET Фамилия = ?, Имя = ?, Отчество = ?, Специальность = ?, Категория = ?, Адрес_работы = ?, Телефон = ?, Email = ? WHERE ID = ?',
+        (updated_doctor['Фамилия'], updated_doctor['Имя'], updated_doctor['Отчество'],
+         updated_doctor['Специальность'], updated_doctor['Категория'],
+         updated_doctor['Адрес_работы'], updated_doctor['Телефон'], updated_doctor['Email'], doctor_id))
+    conn.commit()
+    conn.close()
+    return jsonify(updated_doctor)
+
+
+# Обновить информацию о поликлинике
+@app.route('/app/clinics/<int:clinic_id>', methods=['PUT'])
+def update_clinic(clinic_id):
+    updated_clinic = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE Поликлиника_Больница SET Название = ?, Адрес = ?, Телефон = ?, Email = ?, Руководитель = ? WHERE ID = ?',
+        (updated_clinic['Фамилия'], updated_clinic['Имя'], updated_clinic['Отчество'],
+         updated_clinic['Специальность'], updated_clinic['Категория'],
+         updated_clinic['Адрес_работы'], updated_clinic['Телефон'], updated_clinic['Email'], clinic_id))
+    conn.commit()
+    conn.close()
+    return jsonify(updated_clinic)
+
+
+# Обновить информацию о прием
+@app.route('/app/receptions/<int:reception_id>', methods=['PUT'])
+def update_reception(reception_id):
+    updated_reception = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE Прием SET Врач = ?, Пациент = ?, Дата_время_приема = ?, Статус = ?, Диагноз = ? WHERE ID = ?',
+        (updated_reception['Врач'], updated_reception['Пациент'], updated_reception['Дата_время_приема'],
+         updated_reception['Статус'], updated_reception['Диагноз'],
+         , reception_id))
+    conn.commit()
+    conn.close()
+    return jsonify(updated_reception)
+
+
+# Обновить информацию о прием
+@app.route('/app/medservices/<int:reception_id>', methods=['PUT'])
+def update_reception(reception_id):
+    updated_reception = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE Прием SET Врач = ?, Пациент = ?, Дата_время_приема = ?, Статус = ?, Диагноз = ? WHERE ID = ?',
+        (updated_reception['Врач'], updated_reception['Пациент'], updated_reception['Дата_время_приема'],
+         updated_reception['Статус'], updated_reception['Диагноз'],
+         , reception_id))
+    conn.commit()
+    conn.close()
+    return jsonify(updated_reception)
+
+
+# Обновить информацию о Медицинские_услуги
+@app.route('/app/medservices/<int:medservice_id>', methods=['PUT'])
+def update_medservice(medservice_id):
+    updated_medservice = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE Медицинские_услуги SET Название_услуги = ?, Описание_услуги = ?, Цена = ?, Срок_исполнения = ? WHERE ID = ?',
+        (updated_medservice['Название_услуги'], updated_medservice['Описание_услуги'], updated_medservice['Цена'],
+         updated_medservice['Срок_исполнения'], medservice_id))
+    conn.commit()
+    conn.close()
+    return jsonify(updated_medservice)
+
+
+# Обновить информацию о Результаты_анализов_и_исследований
+@app.route('/app/results/<int:result_id>', methods=['PUT'])
+def update_reception(reception_id):
+    updated_result = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE Результаты_анализов_и_исследований SET Прием = ?, Услуга = ?, Дата_получения_результата = ?, Время_получения_результата = ?, Результат = ? WHERE ID = ?',
+        (updated_result['Прием'], updated_result['Услуга'], updated_result['Дата_получения_результата'],
+         updated_result['Время_получения_результата'], updated_result['Результат'],
+         , result_id))
+    conn.commit()
+    conn.close()
+    return jsonify(updated_result)
+
+
+# Обновить информацию о Медицинские_документы
+@app.route('/app/meddocs/<int:meddoc_id>', methods=['PUT'])
+def update_meddoc(meddoc_id):
+    updated_meddoc = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE Медицинские_документы SET Пациент = ?, Тип_документа = ?, Дата_выдачи = ?, Врач = ?, Содержание_документа = ? WHERE ID = ?',
+        (updated_meddoc['Пациент'], updated_meddoc['Тип_документа'], updated_meddoc['Дата_выдачи'],
+         updated_meddoc['Врач'], updated_meddoc['Содержание_документа'],
+         , meddoc_id))
+    conn.commit()
+    conn.close()
+    return jsonify(updated_meddoc)

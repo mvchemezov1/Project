@@ -1,0 +1,61 @@
+# Получить всех пациентов
+@app.route('/patients', methods=['GET'])
+def get_patients():
+    conn = get_db_connection()
+    patients = conn.execute('SELECT * FROM Пациент').fetchall()
+    conn.close()
+    return render_template('patients.html', patients=patients)
+
+
+# Получить всех врачей
+@app.route('/app/doctors', methods=['GET'])
+def get_doctors():
+    conn = get_db_connection()
+    doctors = conn.execute('SELECT * FROM Врач').fetchall()
+    conn.close()
+    return render_template('doctors.html', doctors=doctors)
+
+
+# Получить всех клиник
+@app.route('/clinics', methods=['GET'])
+def get_clinics():
+    conn = get_db_connection()
+    clinics = conn.execute('SELECT * FROM Поликлиника/больница').fetchall()
+    conn.close()
+    return render_template('doctors.html', clinics=clinics)
+
+
+# Получить всех приёмов
+@app.route('/receptions', methods=['GET'])
+def get_receptions():
+    conn = get_db_connection()
+    receptions = conn.execute('SELECT * FROM Прием').fetchall()
+    conn.close()
+    return render_template('doctors.html', receptions=receptions)
+
+
+# Получить всех медуслуг
+@app.route('/medservices', methods=['GET'])
+def get_medservices():
+    conn = get_db_connection()
+    medservices = conn.execute('SELECT * FROM Медицинские_услуги').fetchall()
+    conn.close()
+    return render_template('doctors.html', medservices=medservices)
+
+
+# Получить всех результатов
+@app.route('/results', methods=['GET'])
+def get_results():
+    conn = get_db_connection()
+    results = conn.execute('SELECT * FROM Результаты_анализов_и_исследований').fetchall()
+    conn.close()
+    return render_template('doctors.html', results=results)
+
+
+# Получить всех меддокументов
+@app.route('/meddocs', methods=['GET'])
+def get_meddocs():
+    conn = get_db_connection()
+    meddocs = conn.execute('SELECT * FROM Медицинские_документы').fetchall()
+    conn.close()
+    return render_template('doctors.html', meddocs=meddocs)

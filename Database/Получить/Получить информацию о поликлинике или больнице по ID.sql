@@ -1,0 +1,1 @@
+SELECT * FROM Поликлиника_Больница WHERE ID =?;
