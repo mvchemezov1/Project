@@ -1,0 +1,75 @@
+# Получить пациента по ID
+@app.route('/app/patients/<int:patient_id>', methods=['GET'])
+def get_patient(patient_id):
+    conn = get_db_connection()
+    patient = conn.execute('SELECT * FROM Пациент WHERE ID = ?', (patient_id,)).fetchone()
+    conn.close()
+    if patient is None:
+        return jsonify({'error': 'Patient not found'}), 404
+    return jsonify(dict(patient))
+
+
+# Получить врача по ID
+@app.route('/app/doctors/<int:doctor_id>', methods=['GET'])
+def get_doctor(doctor_id):
+    conn = get_db_connection()
+    doctor = conn.execute('SELECT * FROM Врач WHERE ID = ?', (doctor_id,)).fetchone()
+    conn.close()
+    if doctor is None:
+        return jsonify({'error': 'Doctor not found'}), 404
+    return jsonify(dict(doctor))
+
+
+# Получить поликлинику по ID
+@app.route('/app/clinics/<int:clinic_id>', methods=['GET'])
+def get_clinic(clinic_id):
+    conn = get_db_connection()
+    clinic = conn.execute('SELECT * FROM Поликлиника_Больница WHERE ID = ?', (clinic_id,)).fetchone()
+    conn.close()
+    if clinic is None:
+        return jsonify({'error': 'Clinic not found'}), 404
+    return jsonify(dict(clinic))
+
+
+# Получить прием по ID
+@app.route('/app/receptions/<int:reception_id>', methods=['GET'])
+def get_reception(reception_id):
+    conn = get_db_connection()
+    reception = conn.execute('SELECT * FROM Прием WHERE ID = ?', (reception_id,)).fetchone()
+    conn.close()
+    if reception is None:
+        return jsonify({'error': 'reception not found'}), 404
+    return jsonify(dict(reception))
+
+
+# Получить медуслугу по ID
+@app.route('/app/medservices/<int:medservice_id>', methods=['GET'])
+def get_medservice(medservice_id):
+    conn = get_db_connection()
+    medservice = conn.execute('SELECT * FROM Медицинские_услуги WHERE ID = ?', (medservice_id,)).fetchone()
+    conn.close()
+    if medservice is None:
+        return jsonify({'error': 'medservice not found'}), 404
+    return jsonify(dict(medservice))
+
+
+# Получить результат по ID
+@app.route('/app/results/<int:result_id>', methods=['GET'])
+def get_result(result_id):
+    conn = get_db_connection()
+    result = conn.execute('SELECT * FROM Результаты_анализов_и_исследований WHERE ID = ?', (result_id,)).fetchone()
+    conn.close()
+    if result is None:
+        return jsonify({'error': 'result not found'}), 404
+    return jsonify(dict(result))
+
+
+# Получить меддокумент по ID
+@app.route('/app/meddocs/<int:meddoc_id>', methods=['GET'])
+def get_meddoc(meddoc_id):
+    conn = get_db_connection()
+    meddoc = conn.execute('SELECT * FROM Медицинские_документы WHERE ID = ?', (meddoc_id,)).fetchone()
+    conn.close()
+    if meddoc is None:
+        return jsonify({'error': 'meddoc not found'}), 404
+    return jsonify(dict(meddoc))

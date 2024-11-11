@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Приемы</title>
+</head>
+<body>
+    <h1>Список приемов</h1>
+    <ul id="receptions-list">
+        {% for reception in receptions %}
+            <li>
+                <strong>ID:</strong> {{ reception.Id }}<br>
+                <strong>Врач:</strong> {{ reception.Врач }}<br>
+                <strong>Пациент:</strong> {{ reception.Пациент }}<br>
+                <strong>Дата приема:</strong> {{ reception.Дата_приема }}<br>
+                <strong>Время приема:</strong> {{ reception.Время_приема }}<br>
+                <strong>Статус:</strong> {{ reception.Статус }}<br>
+                <strong>Диагноз:</strong> {{ reception.Диагноз }}<br>
+                <button onclick="updateAppointment({{ reception.Id }})">Обновить</button>
+                <button onclick="deleteAppointment({{ reception.Id }})">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="addReception()">Добавить прием</button>
+
+    <a href="/">Назад</a>
+
+    <script>
+        function addReception() {
+            // Здесь можно добавить логику для добавления пациента
+            alert("Добавить пациента");
+        }
+
+        function updateReception(id) {
+            // Здесь можно добавить логику для обновления пациента
+            alert("Обновить пациента с ID: " + id);
+        }
+
+        function deleteReception(id) {
+            // Здесь можно добавить логику для удаления пациента
+            alert("Удалить пациента с ID: " + id);
+        }
+    </script>
+</body>
+</html>

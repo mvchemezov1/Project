@@ -1,0 +1,69 @@
+<!-- Объявление типа документа HTML5 -->
+<!DOCTYPE html>
+<!-- Определение языка документа (в данном случае - русский) -->
+<html lang="ru">
+  <!-- Секция, содержащая метаинформацию документа -->
+  <head>
+    <!-- Определение кодировки документа (в данном случае - UTF-8) -->
+    <meta charset="UTF-8">
+    <!-- Определение масштабирования страницы для мобильных устройств -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Установка заголовка страницы -->
+    <title>Регистрация</title>
+    <!-- Подключение внешнего файла стилей -->
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <!-- Секция, содержащая содержимое документа -->
+  <body>
+    <!-- Заголовок страницы -->
+    <header>
+      <h1>Регистрация</h1>
+    </header>
+
+    <!-- Основной контент страницы -->
+    <main>
+      <!-- Форма регистрации -->
+      <form action="/register" method="POST">
+        <!-- Метка для поля ввода ФИО -->
+        <label for="full_name">ФИО:</label>
+        <!-- Поле ввода ФИО -->
+        <input type="text" id="full_name" name="full_name" required>
+
+        <!-- Метка для поля ввода имени пользователя -->
+        <label for="username">Имя пользователя:</label>
+        <!-- Поле ввода имени пользователя -->
+        <input type="text" id="username" name="username" required>
+
+        <!-- Метка для поля ввода email -->
+        <label for="email">Email:</label>
+        <!-- Поле ввода email -->
+        <input type="email" id="email" name="email" required>
+
+        <!-- Метка для поля ввода пароля -->
+        <label for="password">Пароль:</label>
+        <!-- Поле ввода пароля -->
+        <input type="password" id="password" name="password" required>
+
+        <!-- Кнопка для отправки формы -->
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+      <!-- Ссылка на страницу входа -->
+      <p>Уже есть аккаунт? <a href="login.html">Войти</a></p>
+
+      <!-- Вывод сообщений об ошибках или успехе регистрации -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <!-- Вывод сообщения с определенной категорией -->
+            <div class="{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </main>
+
+    <!-- Футер -->
+    <footer>
+      <p>&copy; 2023 Поликлиника Свелс</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Поликлиники</title>
+</head>
+<body>
+    <h1>Список поликлиник</h1>
+    <ul id="clinics-list">
+        {% for clinic in clinics %}
+            <li>
+                <strong>ID:</strong> {{ clinic.Id }}<br>
+                <strong>Название:</strong> {{ clinic.Название }}<br>
+                <strong>Адрес:</strong> {{ clinic.Адрес }}<br>
+                <strong>Телефон:</strong> {{ clinic.Телефон }}<br>
+                <strong>Email:</strong> {{ clinic.Email }}<br>
+                <strong>Руководитель:</strong> {{ clinic.Руководитель }}<br>
+                <button onclick="updateClinic({{ clinic.Id }})">Обновить</button>
+                <button onclick="deleteClinic({{ clinic.Id }})">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="addClinic()">Добавить поликлинику</button>
+
+    <a href="/">Назад</a>
+
+    <script>
+        function addClinic() {
+            // Здесь можно добавить логику для добавления пациента
+            alert("Добавить пациента");
+        }
+
+        function updateClinic(id) {
+            // Здесь можно добавить логику для обновления пациента
+            alert("Обновить пациента с ID: " + id);
+        }
+
+        function deleteClinic(id) {
+            // Здесь можно добавить логику для удаления пациента
+            alert("Удалить пациента с ID: " + id);
+        }
+    </script>
+</body>
+</html>

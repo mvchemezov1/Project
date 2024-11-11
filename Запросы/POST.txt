@@ -1,0 +1,95 @@
+# Создать нового пациента
+@app.route('/app/patients', methods=['POST'])
+def create_patient():
+    new_patient = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO Пациент (Фамилия, Имя, Отчество, Дата_рождения, Пол, Адрес_проживания, Телефон, Email, Полис_ОМС) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        (new_patient['Фамилия'], new_patient['Имя'], new_patient['Отчество'], new_patient['Дата_рождения'],
+         new_patient['Пол'],
+         new_patient['Адрес_проживания'], new_patient['Телефон'], new_patient['Email'], new_patient['Полис_ОМС']))
+    conn.commit()
+    conn.close()
+    return jsonify(new_patient), 201
+
+
+# Создать нового врача
+@app.route('/app/doctors', methods=['POST'])
+def create_doctor():
+    new_doctor = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO Врач (Фамилия, Имя, Отчество, Специальность, Категория, Адрес_работы, Телефон, Email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        (new_doctor['Фамилия'], new_doctor['Имя'], new_doctor['Отчество'], new_doctor['Специальность'],
+         new_doctor['Категория'],
+         new_doctor['Адрес_работы'], new_doctor['Телефон'], new_doctor['Email']))
+    conn.commit()
+    conn.close()
+    return jsonify(new_doctor), 201
+
+
+# Создать нового поликлиника
+@app.route('/app/clinics', methods=['POST'])
+def create_clinic():
+    new_clinic = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO Поликлиника_Больница (Название, Адрес, Телефон, Email, Руководитель]) VALUES (?, ?, ?, ?, ?)',
+        (new_clinic['Название'], new_clinic['Адрес'], new_clinic['Телефон'], new_clinic['Email'],
+         new_clinic['Руководитель']))
+    conn.commit()
+    conn.close()
+    return jsonify(new_clinic), 201
+
+
+# Создать нового прием
+@app.route('/app/receptions', methods=['POST'])
+def create_reception():
+    new_reception = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO Прием (Врач, Пациент, Дата_время_приема, Статус, Диагноз]) VALUES (?, ?, ?, ?, ?)',
+        (new_reception['Врач'], new_reception['Пациент'], new_reception['Дата_время_приема'], new_reception['Статус'],
+         new_reception['Диагноз']))
+    conn.commit()
+    conn.close()
+    return jsonify(new_reception), 201
+
+
+# Создать нового Медицинские_услуги
+@app.route('/app/medservices', methods=['POST'])
+def create_medservice():
+    new_medservice = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO Медицинские_услуги (Название_услуги, Описание_услуги, Цена, Срок_исполнения]) VALUES (?, ?, ?, ?)',
+        (new_medservice['Название_услуги'], new_medservice['Описание_услуги'], new_medservice['Цена'], new_medservice['Срок_исполнения']))
+    conn.commit()
+    conn.close()
+    return jsonify(new_medservice), 201
+
+
+# Создать нового Результаты_анализов_и_исследований
+@app.route('/app/results', methods=['POST'])
+def create_result():
+    new_result = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO Результаты_анализов_и_исследований (Прием, Услуга, Дата_получения_результата, Время_получения_результата, Результат]) VALUES (?, ?, ?, ?, ?)',
+        (new_result['Прием'], new_result['Услуга'], new_result['Дата_получения_результата'], new_result['Время_получения_результата'], new_result['Результат']))
+    conn.commit()
+    conn.close()
+    return jsonify(new_result), 201
+
+
+# Создать нового Медицинские_документы 
+@app.route('/app/meddocs', methods=['POST'])
+def create_meddoc():
+    new_meddoc = request.get_json()
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO Медицинские_документы (Пациент, Тип_документа, Дата_выдачи, Врач, Содержание_документа]) VALUES (?, ?, ?, ?, ?)',
+        (new_meddoc['Пациент'], new_meddoc['Тип_документа'], new_meddoc['Дата_выдачи'], new_meddoc['Врач'], new_meddoc['Содержание_документа']))
+    conn.commit()
+    conn.close()
+    return jsonify(new_meddoc), 201

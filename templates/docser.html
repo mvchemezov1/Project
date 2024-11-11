@@ -1,0 +1,95 @@
+<!-- Объявление типа документа HTML5 -->
+<!DOCTYPE html>
+<!-- Определение языка документа (в данном случае - английский) -->
+<html lang="en">
+  <!-- Секция, содержащая метаинформацию документа -->
+  <head>
+    <!-- Определение кодировки документа (в данном случае - UTF-8) -->
+    <meta charset="UTF-8">
+    <!-- Определение масштабирования страницы для мобильных устройств -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Установка заголовка страницы -->
+    <title>Поиск врачей</title>
+    <!-- Стили для оформления страницы -->
+    <style>
+      /* Определение шрифта и фона страницы */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      /* Оформление заголовка первого уровня */
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      /* Оформление полей ввода текста */
+      input[type="text"] {
+        width: 50%;
+        height: 30px;
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      /* Оформление кнопок */
+      button {
+        width: 20%;
+        height: 40px;
+        font-size: 18px;
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Изменение цвета кнопки при наведении курсора */
+      button:hover {
+        background-color: #3e8e41;
+      }
+
+      /* Оформление блока с результатами поиска */
+      #result {
+        margin-top: 20px;
+      }
+
+      /* Оформление заголовков третьего уровня в блоке с результатами поиска */
+      #result h3 {
+        margin-bottom: 10px;
+      }
+    </style>
+    <!-- Скрипт для поиска врачей по симптомам -->
+    <script>
+      // Асинхронная функция для поиска врачей по симптомам
+      async function searchDoctor() {
+        // Получение значения из поля ввода симптома
+        const symptom = document.getElementById('symptom').value;
+        // Отправка запроса на сервер для поиска врачей по симптомам
+        const response = await fetch(`/search?symptom=${symptom}`);
+        // Получение ответа от сервера в формате JSON
+        const doctors = await response.json();
+
+        // Получение блока для вывода результатов поиска
+        const resultDiv = document.getElementById('result');
+        // Вывод результатов поиска в блоке
+        resultDiv.innerHTML = '<h3>Врачи:</h3>' + (doctors.length? doctors.join('<br>') : 'Нет результатов');
+      }
+    </script>
+  </head>
+  <!-- Секция, содержащая содержимое документа -->
+  <body>
+    <!-- Заголовок страницы -->
+    <h1>Поиск врачей по симптомам</h1>
+    <!-- Поле ввода симптома -->
+    <input type="text" id="symptom" placeholder="Введите симптом">
+    <!-- Кнопка для запуска поиска врачей по симптомам -->
+    <button onclick="searchDoctor()">Поиск</button>
+    <!-- Блок для вывода результатов поиска -->
+    <div id="result"></div>
+  </body>
+</html>

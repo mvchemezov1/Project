@@ -1,0 +1,1 @@
+SELECT * FROM Медицинские_услуги WHERE ID IN (SELECT Услуга FROM Результаты_анализов_и_исследований WHERE Прием IN (SELECT ID FROM Прием WHERE Врач IN (SELECT ID FROM Врач WHERE Адрес_работы =?)));

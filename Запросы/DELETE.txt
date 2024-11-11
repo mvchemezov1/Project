@@ -1,0 +1,68 @@
+# Удалить пациента
+@app.route('/app/patients/<int:patient_id>', methods=['DELETE'])
+def delete_patient(patient_id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM Пациент WHERE ID = ?', (patient_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Patient deleted successfully'}), 200
+
+
+# Удалить врача
+@app.route('/app/doctors/<int:doctor_id>', methods=['DELETE'])
+def delete_doctor(doctor_id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM Врач WHERE ID = ?', (doctor_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Doctor deleted successfully'}), 200
+
+
+# Удалить поликлинику
+@app.route('/app/clinics/<int:clinic_id>', methods=['DELETE'])
+def delete_clinic(clinic_id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM Поликлиника_Больница WHERE ID = ?', (clinic_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Clinic deleted successfully'}), 200
+
+
+# Удалить прием
+@app.route('/app/receptions/<int:reception_id>', methods=['DELETE'])
+def delete_reception(reception_id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM Прием WHERE ID = ?', (reception_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Reception deleted successfully'}), 200
+
+
+# Удалить Медицинские_услуги
+@app.route('/app/medservices/<int:medservice_id>', methods=['DELETE'])
+def delete_medservice(medservice_id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM Медицинские_услуги WHERE ID = ?', (medservice_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Medservice deleted successfully'}), 200
+
+
+# Удалить Результаты_анализов_и_исследований
+@app.route('/app/results/<int:result_id>', methods=['DELETE'])
+def delete_result(result_id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM Результаты_анализов_и_исследований WHERE ID = ?', (result_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Result deleted successfully'}), 200
+
+
+# Удалить Медицинские_услуги
+@app.route('/app/meddocs/<int:meddoc_id>', methods=['DELETE'])
+def delete_meddoc(reception_id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM Прием WHERE ID = ?', (meddoc_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Meddoc deleted successfully'}), 200

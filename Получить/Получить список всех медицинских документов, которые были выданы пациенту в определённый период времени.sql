@@ -1,0 +1,1 @@
+SELECT * FROM Медицинские_документы WHERE Пациент =? AND Дата_выдачи BETWEEN? AND?;

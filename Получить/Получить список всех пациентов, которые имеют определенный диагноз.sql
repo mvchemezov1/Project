@@ -1,0 +1,1 @@
+SELECT * FROM Пациент WHERE ID IN (SELECT Пациент FROM Прием WHERE Диагноз =?);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Медицинские услуги</title>
+</head>
+<body>
+    <h1>Список медицинских услуг</h1>
+    <ul id="medservices-list">
+        {% for medservice in medservices %}
+            <li>
+                <strong>ID:</strong> {{ medservice.Id }}<br>
+                <strong>Название услуги:</strong> {{ medservice.Название_услуги }}<br>
+                <strong>Описание услуги:</strong> {{ medservice.Описание_услуги }}<br>
+                <strong>Цена:</strong> {{ medservice.Цена }}<br>
+                <strong>Срок исполнения:</strong> {{ medservice.Срок_исполнения }}<br>
+                <button onclick="updateService({{ medservice.Id }})">Обновить</button>
+                <button onclick="deleteService({{ medservice.Id }})">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="addmedservice()">Добавить медицинскую услугу</button>
+
+    <a href="/">Назад</a>
+
+    <script>
+        function addMedservice() {
+            // Здесь можно добавить логику для добавления пациента
+            alert("Добавить пациента");
+        }
+
+        function updateMedservice(id) {
+            // Здесь можно добавить логику для обновления пациента
+            alert("Обновить пациента с ID: " + id);
+        }
+
+        function deleteMedservice(id) {
+            // Здесь можно добавить логику для удаления пациента
+            alert("Удалить пациента с ID: " + id);
+        }
+    </script>
+</body>
+</html>

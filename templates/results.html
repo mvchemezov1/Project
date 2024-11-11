@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты анализов</title>
+</head>
+<body>
+    <h1>Список результатов анализов</h1>
+    <ul id="results-list">
+        {% for result in results %}
+            <li>
+                <strong>ID:</strong> {{ result.Id }}<br>
+                <strong>Прием:</strong> {{ result.Прием }}<br>
+                <strong>Услуга:</strong> {{ result.Услуга }}<br>
+                <strong>Дата получения результата:</strong> {{ result.Дата_получения_результата }}<br>
+                <strong>Время_получения_результата:</strong> {{ result.Время_получения_результата }}<br>
+                <strong>Результат:</strong> {{ result.Результат }}<br>
+                <button onclick="updateAppointment({{ result.Id }})">Обновить</button>
+                <button onclick="deleteAppointment({{ result.Id }})">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="addResult()">Добавить результат анализа</button>
+
+    <a href="/">Назад</a>
+
+    <script>
+        function addResult() {
+            // Здесь можно добавить логику для добавления пациента
+            alert("Добавить пациента");
+        }
+
+        function updateResult(id) {
+            // Здесь можно добавить логику для обновления пациента
+            alert("Обновить пациента с ID: " + id);
+        }
+
+        function deleteResult(id) {
+            // Здесь можно добавить логику для удаления пациента
+            alert("Удалить пациента с ID: " + id);
+        }
+    </script>
+</body>
+</html>

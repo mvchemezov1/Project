@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Медицинские документы</title>
+</head>
+<body>
+    <h1>Список медицинских документов</h1>
+    <ul id="meddocs-list">
+        {% for meddoc in meddocs %}
+            <li>
+                <strong>ID:</strong> {{ meddoc.Id }}<br>
+                <strong>Пациент:</strong> {{ meddoc.Пациент }}<br>
+                <strong>Тип документа:</strong> {{ meddoc.Тип_документа }}<br>
+                <strong>Дата выдачи:</strong> {{ meddoc.Дата_выдачи }}<br>
+                <strong>Врач:</strong> {{ meddoc.Врач }}<br>
+                <strong>Содержание документа:</strong> {{ meddoc.Содержание_документа }}<br>
+                <button onclick="updateDoctor({{ meddoc.Id }})">Обновить</button>
+                <button onclick="deleteDoctor({{ meddoc.Id }})">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="addMeddoc()">Добавить медицинский документ</button>
+
+    <a href="/">Назад</a>
+
+    <script>
+        function addMeddoc() {
+            // Здесь можно добавить логику для добавления пациента
+            alert("Добавить пациента");
+        }
+
+        function updateMeddoc(id) {
+            // Здесь можно добавить логику для обновления пациента
+            alert("Обновить пациента с ID: " + id);
+        }
+
+        function deleteMeddoc(id) {
+            // Здесь можно добавить логику для удаления пациента
+            alert("Удалить пациента с ID: " + id);
+        }
+    </script>
+</body>
+</html>

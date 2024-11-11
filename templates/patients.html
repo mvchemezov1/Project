@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пациенты</title>
+</head>
+<body>
+    <h1>Список пациентов</h1>
+    <ul id="patients-list">
+        {% for patient in patients %}
+            <li id="patient-{{ patient.Id }}">
+                <strong>ID:</strong> {{ patient.Id }}<br>
+                <strong>Фамилия:</strong> {{ patient.Фамилия }}<br>
+                <strong>Имя:</strong> {{ patient.Имя }}<br>
+                <strong>Отчество:</strong> {{ patient.Отчество }}<br>
+                <strong>Дата рождения:</strong> {{ patient.Дата_рождения }}<br>
+                <strong>Пол:</strong> {{ patient.Пол }}<br>
+                <strong>Адрес проживания:</strong> {{ patient.Адрес_проживания }}<br>
+                <strong>Телефон:</strong> {{ patient.Телефон }}<br>
+                <strong>Email:</strong> {{ patient.Email }}<br>
+                <strong>Полис ОМС:</strong> {{ patient.Полис_ОМС }}<br>
+                <button onclick="updatePatient({{ patient.Id }})">Обновить</button>
+                <button onclick="deletePatient({{ patient.Id }})">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="addPatient()">Добавить пациента</button>
+
+    <a href="/">Назад</a>
+
+    <script>
+        async function addPatient() {
+            const newPatient = {
+                Фамилия: prompt("Введите фамилию"),
+                Имя: prompt("Введите имя"),
+                Отчество: prompt("Введите отчество"),
+                Дата_рождения: prompt("Введите дату рождения (YYYY-MM-DD)"),
+                Пол: prompt("Введите пол (М/Ж)"),
+                Адрес_проживания: prompt("Введите адрес проживания"),
+                Телефон: prompt("Введите телефон"),
+                Email: prompt("Введите Email"),
+                Полис_ОМС: prompt("Введите полис ОМС"),
+            };
+
+            const response = await fetch('/app/patients', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newPatient)
+            });
+
+            if (response.ok) {
+                alert('Пациент добавлен');
+                // Здесь можно обновить список пациентов
+                window.location.reload(); // Перезагрузка страницы для обновления списка
+            } else {
+                alert('Ошибка при добавлении пациента');
+            }
+        }
+
+        async function updatePatient(id) {
+            const updatedPatient = {
+                Фамилия: prompt("Введите новую фамилию"),
+                Имя: prompt("Введите новое имя"),
+                Отчество: prompt("Введите новое отчество"),
+                Дата_рождения: prompt("Введите новую дату рождения (YYYY-MM-DD)"),
+                Пол: prompt("Введите новый пол (М/Ж)"),
+                Адрес_проживания: prompt("Введите новый адрес проживания"),
+                Телефон: prompt("Введите новый телефон"),
+                Email: prompt("Введите новый Email"),
+                Полис_ОМС: prompt("Введите новый полис ОМС"),
+            };
+
+            const response = await fetch(`/app/patients/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedPatient)
+            });
+
+            if (response.ok) {
+                alert('Пациент обновлен');
+                window.location.reload(); // Перезагрузка страницы для обновления списка
+            } else {
+                alert('Ошибка при обновлении пациента');
+            }
+        }
+
+        async function deletePatient(id) {
+            if (confirm("Вы уверены, что хотите удалить пациента?")) {
+                const response = await fetch(`/app/patients/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Пациент удален');
+                    document.getElementById(`patient-${id}`).remove(); // Удаляем элемент из списка
+                } else {
+                    alert('Ошибка при удалении пациента');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!-- Объявление типа документа HTML5 -->
+<!DOCTYPE html>
+<!-- Определение языка документа (в данном случае - английский) -->
+<html lang="en">
+  <!-- Секция, содержащая метаинформацию документа -->
+  <head>
+    <!-- Определение кодировки документа (в данном случае - UTF-8) -->
+    <meta charset="UTF-8">
+    <!-- Определение масштабирования страницы для мобильных устройств -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Установка заголовка страницы -->
+    <title>Запись на прием</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Стили для оформления страницы -->
+    <style>
+      /* Стиль для блока с сообщением */
+     .alert-box {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #4CAF50; /* Зеленый цвет */
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000; /* Делаем это сообщение поверх других элементов */
+        transition: opacity 0.5s ease; /* Плавный переход */
+      }
+      /* Стиль для карточки врача */
+     .card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      /* Стиль для карточки врача при наведении курсора */
+     .card:hover {
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+      }
+      /* Стиль для заголовка карточки врача */
+     .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+      }
+      /* Стиль для тела карточки врача */
+     .card-body {
+        padding: 15px;
+      }
+      /* Стиль для заголовка карточки врача */
+     .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      /* Стиль для текста карточки врача */
+     .card-text {
+        color: #6c757d;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+      /* Стиль для ссылки карточки врача */
+     .card-link {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      /* Стиль для ссылки карточки врача при наведении курсора */
+     .card-link:hover {
+        background-color: #0056b3;
+      }
+      /* Стиль для календаря */
+      #calendar {
+        height: 300px; /* Уменьшение высоты календаря */
+        width: 100%;
+        border: 1px solid #ddd;
+      }
+      /* Стиль для контейнера слотов */
+     .slots-container {
+        height: 300px; /* Добавьте аналогичную высоту для контейнера слотов */
+        width: 100%;
+        border: 1px solid #ddd; /* Добавьте рамку для контейнера слотов */
+        overflow-y: auto; /* Добавьте прокрутку для слотов */
+      }
+      /* Стиль для сообщения об отсутствии доступных слотов */
+     .no-slots-message {
+        height: 300px; /* Убедитесь, что высота соответствует высоте контейнера для слотов */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <!-- Секция, содержащая содержимое документа -->
+  <body>
+    <!-- Контейнер для содержимого страницы -->
+    <div class="container my-5">
+      <!-- Заголовок страницы -->
+      <h1 class="text-center mb-4">Запись на прием</h1>
+      <!-- Фильтры -->
+      <div class="row mb-4">
+        <!-- Поле для поиска по полному имени -->
+        <div class="col-md-4">
+          <input type="text" id="search-full-name" class="form-control" placeholder="Search by full name">
+        </div>
+        <!-- Выпадающий список для фильтрации по специальности -->
+        <div class="col-md-4">
+          <select id="filter-specialty" class="form-select">
+            <option value="">All specialties</option>
+            {% for doctor in doctors %}
+              <option value="{{ doctor.specialty }}">{{ doctor.specialty }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <!-- Выпадающий список для фильтрации по симптомам -->
+        <div class="col-md-4">
+          <select id="filter-symptom" class="form-select">
+            <option value="">Выберите симптом</option>
+            {% for doctor in doctors %}
+              <option value="{{ doctor.symptom }}">{{ doctor.symptom }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <!-- Список врачей -->
+      <div class="row" id="doctors-list">
+        {% if doctors %}
+          {% for doctor in doctors %}
+            <div class="col-md-4">
+              <div class="doctor-card card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ doctor.full_name }}</h5>
+                  <p class="card-text">Specialty: {{ doctor.specialty }}</p>
+                  <button type="button" class="show-calendar" data-doctor-id="{{ doctor.id }}">Увидеть расписание</button>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No doctors found.</p>
+        {% endif %}
+      </div>
+    </div>
+    <!-- Модальное окно для календаря -->
+    <div class="modal fade" id="calendar-modal" tabindex="-1" aria-labelledby="calendar-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="calendar-modal-label"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="calendar" class="flex-fill" style="padding-right: 20px;"></div>
+            <div id="available-slots-modal" class="flex-fill">
+              <div class="slots-container">
+                <!-- Слоты будут добавлены здесь -->
+              </div>
+              <div class="no-slots-message" style="display: none;">
+                <!-- Сообщение об отсутствии доступных слотов будет добавлено здесь -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Add Bootstrap JS and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                // Initialize full calendar
+                let calendar;
+
+                // Show calendar modal and initialize calendar
+                function showCalendar(doctorId) {
+                    doc = doctorId
+                    $('#calendar-modal').modal('show');
+
+                    if (!calendar) {
+                        calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+                        initialView: 'dayGridMonth',
+                        dateClick: function (info) {
+                                console.log('Clicked on date:', info.dateStr); // Логирует выбранную дату
+                                i = info.dateStr
+                                fetch(`/api/slots?date=${info.dateStr}&doctorId=${doctorId}`)
+                                    .then(response => {
+                                    console.log('API response:', response); // Логирует ответ от API
+                                    return response.json()
+                                    })
+                                    .then(slots => {
+                                        console.log('Slots data:', slots); // Логирует данные о доступных слотах
+                                        displayAvailableSlots(slots, info.dateStr); // Теперь slots будет содержать свободные интервалы
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                            }
+                        });
+                        calendar.render();
+                    } else {
+                        calendar.render();
+                    }
+                }
+
+                function displayAvailableSlots(slots, date) {
+                    const slotsContainer = document.querySelector('.slots-container');
+                    const noSlotsMessage = document.querySelector('.no-slots-message');
+
+                    // Очистка контейнера
+                    slotsContainer.innerHTML = '';
+
+                    // Скрыть сообщение об отсутствии слотов
+                    noSlotsMessage.style.display = 'none';
+
+                    // Проверить, есть ли уже доступные слоты в контейнере
+                    const existingSlots = slotsContainer.querySelectorAll('.slot');
+                    if (existingSlots.length > 0) {
+                        existingSlots.forEach(slot => slot.remove());
+                    }
+
+                    if (slots.length > 0) {
+                        slots.forEach(slot => {
+                            const slotElement = document.createElement('div');
+                            slotElement.textContent = `Available slot: ${slot.appointment_date}`;
+                            slotElement.classList.add('slot'); // Добавить класс для доступных слотов
+                            slotsContainer.appendChild(slotElement);
+                            slotElement.addEventListener('click', function () {
+                                const doctorId = doc; // Убедитесь, что переменная doctorId определена
+                                const appointmentDate = slot.appointment_date;
+                                fetch(`/api/slots?date=${i}&doctorId=${doc}`)
+                                    .then(response => {
+                                    console.log('API response:', response); // Логирует ответ от API
+                                    return response.json()
+                                    })
+                                    .then(slots => {
+                                        console.log('Slots data:', slots); // Логирует данные о доступных слотах
+                                        displayAvailableSlots(slots, i); // Теперь slots будет содержать свободные интервалы
+                                    })
+                                fetch('/api/appointments', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        doctor_id: doctorId,
+                                        date: date,
+                                        appointment_date: appointmentDate
+                                    })
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    // Показать всплывающее сообщение об успешной записи
+                                    showAlert('Вы успешно записаны на приём!');
+                                    console.log('Запись успешна:', data);
+                                })
+                                .catch(error => console.error('Ошибка при записи на приём:', error));
+                            });
+                        });
+                    } else {
+                        displayNoAvailableSlots(date);
+                    }
+                }
+
+                function showAlert(message) {
+                    const alertBox = document.createElement('div');
+                    alertBox.textContent = message;
+                    alertBox.classList.add('alert-box'); // Добавить класс для стилизации
+
+                    document.body.appendChild(alertBox);
+
+                    // Удалить всплывающее сообщение через 3 секунды
+                    setTimeout(() => {
+                        alertBox.remove();
+                    }, 3000);
+                }
+
+
+
+                function displayNoAvailableSlots(date) {
+                    const slotsContainer = document.querySelector('.slots-container');
+                    const noSlotsMessage = document.querySelector('.no-slots-message');
+
+                    slotsContainer.innerHTML = ''; // Очистка контейнера
+                    noSlotsMessage.textContent = `No available slots for ${date}`;
+                    noSlotsMessage.style.display = 'block'; // Показать сообщение об отсутствии слотов
+                }
+
+                // Handle "View Schedule" button clicks
+                $('.show-calendar').click(function () {
+                    let doctorId = $(this).data('doctor-id');
+                    showCalendar(doctorId);
+                });
+
+                // Handle filters
+                $('#search-full-name, #filter-specialty', '#filter-symptom').on('input change', function () {
+                    let fullName = $('#search-full-name').val().toLowerCase();
+                    let symptom = $('#filter-symptom').val().toLowerCase();
+                    let specialty = $('#filter-specialty').val().toLowerCase();
+
+                    $('.doctor-card').each(function () {
+                        let card = $(this);
+                        let cardFullName = card.find('.card-title').text().toLowerCase();
+                        let cardSpecialty = card.find('.card-text').text().toLowerCase().split(': ')[1].toLowerCase();
+
+                        if ((!fullName || cardFullName.includes(fullName)) && (!specialty || cardSpecialty.includes(specialty))) {
+                            card.show()
+                        } else {
+                            card.hide()
+                        }
+                    });
+                });
+            });
+        </script>
+</body>
+</html>

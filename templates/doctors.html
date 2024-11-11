@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Врачи</title>
+</head>
+<body>
+    <h1>Список врачей</h1>
+    <ul id="doctors-list">
+        {% for doctor in doctors %}
+            <li>
+                <strong>ID:</strong> {{ doctor.Id }}<br>
+                <strong>Фамилия:</strong> {{ doctor.Фамилия }}<br>
+                <strong>Имя:</strong> {{ doctor.Имя }}<br>
+                <strong>Отчество:</strong> {{ doctor.Отчество }}<br>
+                <strong>Специальность:</strong> {{ doctor.Специальность }}<br>
+                <strong>Категория:</strong> {{ doctor.Категория }}<br>
+                <strong>Адрес работы:</strong> {{ doctor.Адрес_работы }}<br>
+                <strong>Телефон:</strong> {{ doctor.Телефон }}<br>
+                <strong>Email:</strong> {{ doctor.Email }}<br>
+                <button onclick="updateDoctor({{ doctor.Id }})">Обновить</button>
+                <button onclick="deleteDoctor({{ doctor.Id }})">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="addDoctor()">Добавить доктора</button>
+
+    <a href="/">Назад</a>
+
+    <script>
+        function addDoctor() {
+            // Здесь можно добавить логику для добавления пациента
+            alert("Добавить пациента");
+        }
+
+        function updateDoctor(id) {
+            // Здесь можно добавить логику для обновления пациента
+            alert("Обновить пациента с ID: " + id);
+        }
+
+        function deleteDoctor(id) {
+            // Здесь можно добавить логику для удаления пациента
+            alert("Удалить пациента с ID: " + id);
+        }
+    </script>
+</body>
+</html>
