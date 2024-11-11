@@ -1,1 +1,0 @@
-SELECT * FROM Медицинские_услуги WHERE ID IN (SELECT Услуга FROM Результаты_анализов_и_исследований WHERE Прием IN (SELECT ID FROM Прием WHERE Пациент =? AND Дата_и_время_приема BETWEEN? AND?));

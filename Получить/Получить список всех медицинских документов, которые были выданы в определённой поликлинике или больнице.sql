@@ -1,1 +1,0 @@
-SELECT * FROM Медицинские_документы WHERE Врач IN (SELECT ID FROM Врач WHERE Адрес_работы =?);
